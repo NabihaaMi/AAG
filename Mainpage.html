@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integrated Website</title>
+    <style>
+        /* Your CSS styles can go here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #B6CDE5; /* Light blue background */
+        }
+        header {
+            background: linear-gradient(to bottom, #82B2E5, #5479A0); /* Blue gradient for the header */
+            color: #fff; /* White text color */
+            padding: 40px 0; /* Top and bottom padding */
+            text-align: center; /* Center-align text */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add box shadow */
+        }
+        h1, h2 {
+            margin: 0; /* Remove default margin */
+            font-family: "Copperplate", fantasy;
+        }
+        h1 {
+            font-size: 48px; /* Adjust title font size */
+        }
+        h2 {
+            font-size: 24px; /* Adjust subheading font size */
+        }
+        .container {
+            max-width: 800px; /* Limit content width */
+            margin: 0 auto; /* Center content horizontally */
+            padding: 20px; /* Add padding around content */
+        }
+        .box {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            cursor: pointer; /* Change cursor to pointer on hover */
+        }
+        .box:hover {
+            background-color: #f0f0f0; /* Light gray background on hover */
+        }
+        .box h3 {
+            margin-top: 0;
+        }
+        p {
+            line-height: 1.6; /* Adjust line height for paragraphs */
+        }
+        a {
+            color: #007bff; /* Blue color for links */
+            text-decoration: none; /* Remove underline from links */
+            transition: color 0.3s ease; /* Smooth transition for link color change */
+        }
+        a:hover {
+            color: #0056b3; /* Darker blue color on hover */
+        }
+        #reader-tool {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <h1>Study Squad</h1>
+        <h2>Education is the way we do it</h2>
+    </div>
+</header>
+
+<div class="container">
+    <a href="file:///Users/nabihamirza/Desktop/AAG/Code/American-1.html">
+        <div class="box">
+            <h3>American Curriculum</h3>
+        </div>
+    </a>
+    <a href="file:///Users/nabihamirza/Desktop/AAG/Code/British-C.html">
+        <div class="box">
+            <h3>British Curriculum</h3>
+        </div>
+    </a>
+    <a href="/cbse-curriculum">
+        <div class="box">
+            <h3>Central Board of Secondary Education (CBSE) Curriculum</h3>
+        </div>
+    </a>
+    <a href="file:///Users/nabihamirza/Desktop/AAG/Code/test.html">
+        <div class="box">
+            <h3>Teacher Preference</h3>
+        </div>
+    </a>
+  <a href="file:///Users/nabihamirza/Desktop/AAG/Code/Chatbots-1.html">
+        <div class="box">
+            <h3>Chatbots</h3>
+        </div>
+    </a>
+</div>
+
+<div id="reader-tool" onclick="readSelectedText()">Read Selected Text</div>
+
+<script>
+    function readSelectedText() {
+        var selection = window.getSelection();
+        var selectedText = selection.toString().trim();
+
+        if (selectedText !== '') {
+            if ('speechSynthesis' in window) {
+                var synthesis = window.speechSynthesis;
+                var utterance = new SpeechSynthesisUtterance(selectedText);
+
+                synthesis.speak(utterance);
+            } else {
+                alert("Text-to-speech is not supported in your browser. Please use a modern browser.");
+            }
+        } else {
+            alert('Please select some text to read.');
+        }
+    }
+</script>
+
+</body>
+</html>

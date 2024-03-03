@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 9 Science Study Materials</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #CBDEF1;
+        }
+        .menu {
+            width: 200px;
+            padding: 20px;
+            background-color: #007bff;
+            color: white;
+            position: fixed;
+            height: 100%;
+        }
+        .menu a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .menu a:hover {
+            text-decoration: underline;
+        }
+        .content {
+            margin-left: 240px;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .resource-box {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        #reader-tool {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+
+<div class="menu">
+    <a href="file:///Users/nabihamirza/Desktop/AAG/Code/Mainpage.html">Home</a>
+    <a href="file:///Users/nabihamirza/Desktop/AAG/Code/test.html">Teacher Preference</a>
+</div>
+
+<div class="content">
+    <h1>Grade 9 Science Study Materials</h1>
+    <div class="resource-box">
+        <h2>Textbooks and Resources</h2>
+        <ul>
+            <li><a href="https://www.open.edu/openlearn/science-maths-technology/free-courses">OpenLearn - Free Science Courses</a></li>
+            <li><a href="https://www.khanacademy.org/science/high-school-biology">Khan Academy - High School Biology</a></li>
+            <li><a href="https://www.khanacademy.org/science/high-school-chemistry">Khan Academy - High School Chemistry</a></li>
+            <li><a href="https://www.khanacademy.org/science/high-school-physics">Khan Academy - High School Physics</a></li>
+        </ul>
+    </div>
+    <div class="resource-box">
+        <h2>Online Lectures and Videos</h2>
+        <ul>
+            <li><a href="https://www.youtube.com/user/crashcourse">CrashCourse - Science</a></li>
+            <li><a href="https://www.youtube.com/user/BozemanScience">Bozeman Science - Biology</a></li>
+            <li><a href="https://www.youtube.com/user/ilectureonline">iLectureOnline - Chemistry</a></li>
+            <li><a href="https://www.youtube.com/user/minutephysics">MinutePhysics - Physics</a></li>
+        </ul>
+    </div>
+    <div class="resource-box">
+        <h2>Practice Tests and Quizzes</h2>
+        <ul>
+            <li><a href="https://www.varsitytutors.com/ap_biology-practice-tests">Varsity Tutors - AP Biology Practice Tests</a></li>
+            <li><a href="https://www.varsitytutors.com/chemistry-practice-tests">Varsity Tutors - Chemistry Practice Tests</a></li>
+            <li><a href="https://www.varsitytutors.com/physics-practice-tests">Varsity Tutors - Physics Practice Tests</a></li>
+        </ul>
+    </div>
+    <div class="resource-box">
+        <h2>Article</h2>
+        <ul>
+            <li><a href="file:///Users/nabihamirza/Desktop/AAG/Code/article.html">Photosynthesis</a></li>
+<li><a href="file:///Users/nabihamirza/Desktop/AAG/Code/solarsystemhtml.html">Solar System</a></li>
+        </ul>
+    </div>
+</div>
+
+<div id="reader-tool" onclick="readSelectedText()">Read Selected Text</div>
+
+<script>
+    function readSelectedText() {
+        var selection = window.getSelection();
+        var selectedText = selection.toString().trim();
+
+        if (selectedText !== '') {
+            if ('speechSynthesis' in window) {
+                var synthesis = window.speechSynthesis;
+                var utterance = new SpeechSynthesisUtterance(selectedText);
+
+                synthesis.speak(utterance);
+            } else {
+                alert("Text-to-speech is not supported in your browser. Please use a modern browser.");
+            }
+        } else {
+            alert('Please select some text to read.');
+        }
+    }
+</script>
+
+</body>
+</html>

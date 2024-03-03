@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algebra Study Materials</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #3A79BD; /* Blue background color for the website */
+            color: white;
+            overflow: hidden; /* Added overflow:hidden from the other code */
+        }
+        .container {
+            display: flex;
+        }
+        .menu {
+            width: 200px;
+            padding: 20px;
+            background-color: #005a9e; /* Darker shade of blue for the menu */
+        }
+        .menu a {
+            color: #ffffff; /* White color for menu links */
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .menu a:hover {
+            text-decoration: underline;
+        }
+        .content {
+            flex: 1;
+            margin-left: 20px;
+            padding: 20px;
+            border: 1px solid white;
+            background-color: #ffffff; /* White background color for content */
+            border-radius: 8px;
+        }
+        h1 {
+            color: #3A79BD; /* Blue color for the title */
+        }
+        .resource-box {
+            border: 1px solid #0078d4; /* Blue border for resource boxes */
+            padding: 10px;
+            margin-bottom: 20px;
+            background-color: #3A79BD; /* White background color for resource boxes */
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        a {
+            color: #ffffff; /* Blue color for links */
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        #reader-tool {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    <div id="reader-tool" onclick="readSelectedText()">Read Selected Text</div>
+    <div class="container">
+        <div class="menu">
+            <a href="file:///Users/nabihamirza/Desktop/AAG/Code/Mainpage.html">Home</a>
+            <a href="file:///Users/nabihamirza/Desktop/AAG/Code/test.html">Teacher Preference</a>
+        </div>
+        <div class="content">
+            <h1>Algebra Study Materials</h1>
+            <div class="resource-box">
+                <h2>Khan Academy</h2>
+                <p><a href="https://www.khanacademy.org/math/algebra">Khan Academy - Algebra</a></p>
+            </div>
+            <div class="resource-box">
+                <h2>YouTube Playlist</h2>
+                <p><a href="https://www.youtube.com/playlist?list=PL0-GT3co4r2wlh6UHTUeQsrf3mlS2lk6x">Algebra Basics</a></p>
+            </div>
+            <div class="resource-box">
+                <h2>Math is Fun</h2>
+                <p><a href="https://www.mathsisfun.com/algebra/index.html">Math is Fun - Algebra</a></p>
+            </div>
+            <div class="resource-box">
+                <h2>Varsity Tutors</h2>
+                <p><a href="https://www.varsitytutors.com/algebra">Varsity Tutors - Algebra Practice Tests</a></p>
+            </div>
+            <div class="resource-box">
+                <h2>IXL</h2>
+                <p><a href="https://www.ixl.com/math/algebra">IXL - Algebra Practice</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function readSelectedText() {
+            var selection = window.getSelection();
+            var selectedText = selection.toString().trim();
+
+            if (selectedText !== '') {
+                if ('speechSynthesis' in window) {
+                    var synthesis = window.speechSynthesis;
+                    var utterance = new SpeechSynthesisUtterance(selectedText);
+
+                    synthesis.speak(utterance);
+                } else {
+                    alert("Text-to-speech is not supported in your browser. Please use a modern browser.");
+                }
+            } else {
+                alert('Please select some text to read.');
+            }
+        }
+    </script>
+</body>
+</html>

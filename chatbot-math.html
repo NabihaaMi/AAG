@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Bot</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align items to the top */
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            border: 2px solid blue; /* Add blue border */
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 20px; /* Add margin at the top */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Math Bot</h1>
+        <p>Ask me a mathematical question:</p>
+        <input type="text" id="userInput" placeholder="Type your question">
+        <button id="getAnswerBtn">Get Answer</button>
+        <p id="answer"></p>
+    </div>
+
+    <script>
+        document.getElementById("getAnswerBtn").addEventListener("click", answerQuestion);
+
+        function answerQuestion() {
+            const userInput = document.getElementById("userInput").value.trim();
+
+            if (userInput === "") {
+                alert("Please enter a mathematical question.");
+                return;
+            }
+
+            try {
+                const result = eval(userInput);
+                document.getElementById("answer").innerText = "Answer: " + result;
+            } catch (error) {
+                document.getElementById("answer").innerText = "Invalid input. Please enter a valid mathematical expression.";
+            }
+        }
+    </script>
+</body>
+</html>
+
+

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teacher Chatbot</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 20px;
+    }
+    .chat-container {
+        max-width: 500px;
+        margin: 0 auto;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+    .chat-box {
+        height: 300px;
+        overflow-y: scroll;
+        padding: 10px;
+    }
+    .chat-input {
+        width: calc(100% - 20px);
+        padding: 10px;
+        border: none;
+        border-top: 1px solid #ccc;
+        outline: none;
+    }
+    .chat-btn {
+        width: calc(100% - 20px);
+        padding: 10px;
+        background-color: #007bff;
+        border: none;
+        color: #fff;
+        font-weight: bold;
+        text-transform: uppercase;
+        cursor: pointer;
+        outline: none;
+    }
+</style>
+</head>
+<body>
+
+<div class="chat-container">
+    <div class="chat-box" id="chat-box">
+        <p>Welcome to the Teacher Chatbot!</p>
+    </div>
+    <input type="text" class="chat-input" id="user-input" placeholder="Type your message...">
+    <button class="chat-btn" onclick="sendMessage()">Send</button>
+</div>
+
+<script>
+    function sendMessage() {
+        var userInput = document.getElementById("user-input").value;
+        if (userInput.trim() === "") return;
+        
+        var chatBox = document.getElementById("chat-box");
+        var userMessage = "<p><strong>You:</strong> " + userInput + "</p>";
+        
+        chatBox.innerHTML += userMessage;
+        chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
+        
+        // Check if the user's input contains keywords related to math
+        if (userInput.toLowerCase().includes("math") || userInput.toLowerCase().includes("solve")) {
+            // Simulate solving a math problem
+            var solution = solveMathProblem(userInput);
+            var teacherResponse = "<p><strong>Teacher:</strong> " + solution + "</p>";
+            chatBox.innerHTML += teacherResponse;
+        } else {
+            // Generic response
+            var teacherResponse = "<p><strong>Teacher:</strong> Thanks for your message!</p>";
+            chatBox.innerHTML += teacherResponse;
+        }
+        
+        chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
+        document.getElementById("user-input").value = ""; // Clear input field
+    }
+    
+    function solveMathProblem(input) {
+        // Here you can implement logic to solve mathematical problems
+        // For simplicity, let's assume we only support basic arithmetic operations
+        
+        // Check if the input contains addition, subtraction, multiplication or division
+        if (input.includes("+")) {
+            var parts = input.split("+");
+            var result = parseFloat(parts[0]) + parseFloat(parts[1]);
+            return "The sum of " + parts[0] + " and " + parts[1] + " is " + result;
+        } else if (input.includes("-")) {
+            var parts = input.split("-");
+            var result = parseFloat(parts[0]) - parseFloat(parts[1]);
+            return "The difference between " + parts[0] + " and " + parts[1] + " is " + result;
+        } else if (input.includes("*")) {
+            var parts = input.split("*");
+            var result = parseFloat(parts[0]) * parseFloat(parts[1]);
+            return "The product of " + parts[0] + " and " + parts[1] + " is " + result;
+        } else if (input.includes("/")) {
+            var parts = input.split("/");
+            var result = parseFloat(parts[0]) / parseFloat(parts[1]);
+            return "The quotient of " + parts[0] + " and " + parts[1] + " is " + result;
+        } else {
+            return "Sorry, I couldn't understand the math problem.";
+        }
+    }
+</script>
+
+</body>
+</html>
+
+

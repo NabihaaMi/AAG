@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9th Grade</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #CBDEF1; /* Light gray background */
+            display: flex;
+            flex-direction: column; /* Stack items vertically */
+        }
+        .title {
+            background-color: #3A79BD; /* Blue background for title */
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px; /* Add margin below the title */
+        }
+        .menu {
+            width: 200px;
+            height: 30px;
+            background-color: #3A79BD; /* Blue background for menu */
+            padding: 20px;
+            color: #fff;
+            text-align: center;
+            display: flex;
+            flex-direction: column; /* Stack menu items vertically */
+            justify-content: space-between; /* Space evenly */
+            margin-bottom: 20px; /* Add margin below the menu */
+        }
+        .menu ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .menu li {
+            margin-bottom: 10px;
+        }
+        .menu a {
+            display: block;
+            color: #fff;
+            text-decoration: none;
+        }
+        .menu a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding: 20px; /* Add padding around the container */
+        }
+        .box {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            width: calc(50% - 20px); /* Set width for each box (minus margin) */
+        }
+        .box h3 {
+            margin-top: 0;
+            color: #007bff; /* Blue color for title */
+            font-size: 20px;
+            text-align: center;
+        }
+        @media (max-width: 600px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .box {
+                width: calc(100% - 40px); /* Full width on smaller screens */
+            }
+        }
+
+        /* Reader Tool Styles */
+        #reader-tool {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+
+<div id="reader-tool" onclick="readSelectedText()">Read Selected Text</div>
+
+<div class="title">
+    <h1>9th Grade</h1>
+</div>
+
+<div class="menu">
+    <ul>
+        <li><a href="file:///Users/nabihamirza/Desktop/AAG/Code/Mainpage.html">Home</a></li>
+    </ul>
+</div>
+<div class="container">
+    <a href="file:///Users/nabihamirza/Desktop/AAG/Code/math.html" class="box">
+        <h3>Mathematics</h3>
+    </a>
+    <a href="file:///Users/nabihamirza/Desktop/AAG/Code/sciene9.html" class="box">
+        <h3>Science</h3>
+    </a>
+    <a href="#" class="box">
+        <h3>English</h3>
+    </a>
+    <a href="#" class="box">
+        <h3>History</h3>
+    </a>
+    <a href="#" class="box">
+        <h3>Geography</h3>
+    </a>
+</div>
+
+<script>
+    function readSelectedText() {
+        var selection = window.getSelection();
+        var selectedText = selection.toString().trim();
+
+        if (selectedText !== '') {
+            if ('speechSynthesis' in window) {
+                var synthesis = window.speechSynthesis;
+                var utterance = new SpeechSynthesisUtterance(selectedText);
+
+                synthesis.speak(utterance);
+            } else {
+                alert("Text-to-speech is not supported in your browser. Please use a modern browser.");
+            }
+        } else {
+            alert('Please select some text to read.');
+        }
+    }
+</script>
+
+</body>
+</html>

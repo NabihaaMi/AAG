@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher And Student Q&A</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            position: relative;
+            overflow: hidden;
+        }
+        header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .add-post-form input[type="text"],
+        .add-post-form textarea,
+        .add-post-form input[type="file"],
+        .comment-form input[type="text"],
+        .comment-form textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .add-post-form button,
+        .comment-form button {
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .post {
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .post h2 {
+            margin-top: 0;
+            color: #333;
+        }
+        .post p {
+            margin-bottom: 10px;
+            color: #666;
+        }
+        .post img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        .delete-button {
+            background-color: #ff3333;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .comments {
+            margin-top: 20px;
+        }
+        .comment {
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        .comment p {
+            margin-bottom: 5px;
+            color: #444;
+        }
+        .chat-link {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 20px 20px 0 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            text-decoration: none;
+            z-index: 9999;
+        }
+        #reader-tool {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Teacher And Student Q&A</h1>
+    </header>
+    <div class="container">
+        <div class="add-post-form">
+            <h2>Create a New Post</h2>
+            <form id="postForm">
+                <input type="text" id="postAuthor" name="postAuthor" placeholder="Your Name" required><br>
+                <input type="text" id="postTitle" name="postTitle" placeholder="Post Title" required><br>
+                <textarea id="postContent" name="postContent" placeholder="Type your post here" rows="4" required></textarea><br>
+                <input type="file" id="postImage" name="postImage"><br>
+                <button type="submit">Post</button>
+            </form>
+        </div>
+        <div id="posts"></div>
+    </div>
+    <a href="file:///Users/nabihamirza/Desktop/chatbot.html" class="chat-link">Chat with us</a>
+    <div id="reader-tool" onclick="readSelectedText()">Read Selected Text</div>
+
+    <script>
+        // Load existing posts from local storage on page load
+        window.addEventListener('load', function() {
+            var savedPosts = JSON.parse(localStorage.getItem('posts'));
+            if (savedPosts) {
+                savedPosts.forEach(function(post) {
+                    createPost(post.author, post.title, post.content, post.image, post.comments);
+                });
+            }
+        });
+
+        // Function to handle post form submission
+        document.getElementById('postForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var postAuthor = document.getElementById('postAuthor').value;
+            var postTitle = document.getElementById('postTitle').value;
+            var postContent = document.getElementById('postContent').value;
+            var postImage = document.getElementById('postImage').files[0];
+            var reader = new FileReader();
+
+            reader.onload = function() {
+                var postImageSrc = reader.result;
+                createPost(postAuthor, postTitle, postContent, postImageSrc, []);
+                savePosts();
+            };
+
+            if (postImage) {
+                reader.readAsDataURL(postImage);
+            } else {
+                createPost(postAuthor, postTitle, postContent, null, []);
+                savePosts();
+            }
+        });
+
+        // Function to create a new post
+        function createPost(author, title, content, imageSrc, comments) {
+            var postDiv = document.createElement('div');
+            postDiv.classList.add('post');
+            postDiv.innerHTML = '<h2>' + title + '</h2><p><strong>Author:</strong> ' + author + '</p><p>' + content + '</p>';
+            if (imageSrc) {
+                postDiv.innerHTML += '<img src="' + imageSrc + '" alt="Post Image">';
+            }
+            postDiv.innerHTML += '<div class="comments"><h3>Comments</h3></div>';
+            comments.forEach(function(comment) {
+                postDiv.querySelector('.comments').innerHTML += '<div class="comment"><p><strong>Author:</strong> ' + comment.author + '</p><p>' + comment.content + '</p></div>';
+            });
+            postDiv.innerHTML += '<form class="comment-form"><input type="text" name="commentAuthor" placeholder="Your Name" required><br>' +
+                                 '<textarea name="commentContent" placeholder="Type your comment here" rows="2" required></textarea><br>' +
+                                 '<button type="submit">Submit Comment</button></form>';
+            postDiv.innerHTML += '<button class="delete-button" onclick="deletePost(this)">Delete</button>';
+            document.getElementById('posts').appendChild(postDiv);
+            document.getElementById('postForm').reset();
+        }
+
+        // Function to delete a post
+        function deletePost(button) {
+            var post = button.parentElement;
+            post.remove();
+            savePosts();
+        }
+
+        // Function to save posts to local storage
+        function savePosts() {
+            var posts = [];
+            var postElements = document.querySelectorAll('.post');
+            postElements.forEach(function(postElement) {
+                var post = {
+                    author: postElement.querySelector('p strong').textContent,
+                    title: postElement.querySelector('h2').textContent,
+                    content: postElement.querySelector('p:nth-child(3)').textContent,
+                    image: postElement.querySelector('img') ? postElement.querySelector('img').src : null,
+                    comments: []
+                };
+                var commentElements = postElement.querySelectorAll('.comment');
+                commentElements.forEach(function(commentElement) {
+                    var comment = {
+                        author: commentElement.querySelector('p strong').textContent,
+                        content: commentElement.querySelector('p:nth-child(2)').textContent
+                    };
+                    post.comments.push(comment);
+                });
+                posts.push(post);
+            });
+            localStorage.setItem('posts', JSON.stringify(posts));
+        }
+
+        // Event delegation for comment form submission
+        document.addEventListener('submit', function(event) {
+            if (event.target && event.target.classList.contains('comment-form')) {
+                event.preventDefault();
+                var post = event.target.parentElement;
+                var commentAuthor = event.target.querySelector('input[name="commentAuthor"]').value;
+                var commentContent = event.target.querySelector('textarea[name="commentContent"]').value;
+                var commentDiv = document.createElement('div');
+                commentDiv.classList.add('comment');
+                commentDiv.innerHTML = '<p><strong>Author:</strong> ' + commentAuthor + '</p><p>' + commentContent + '</p>';
+                post.querySelector('.comments').appendChild(commentDiv);
+                event.target.reset();
+                savePosts();
+            }
+        });
+
+        // Function to read selected text
+        function readSelectedText() {
+            var selection = window.getSelection();
+            var selectedText = selection.toString().trim();
+
+            if (selectedText !== '') {
+                if ('speechSynthesis' in window) {
+                    var synthesis = window.speechSynthesis;
+                    var utterance = new SpeechSynthesisUtterance(selectedText);
+
+                    synthesis.speak(utterance);
+                } else {
+                    alert("Text-to-speech is not supported in your browser. Please use a modern browser.");
+                }
+            } else {
+                alert('Please select some text to read.');
+            }
+        }
+    </script>
+</body>
+</html>

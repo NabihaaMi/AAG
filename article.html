@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photosynthesis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        #reader-tool {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    <article>
+        <h1>Take a deep breath. Then thank a plant.</h1>
+        <p>If you eat fruit, vegetables, grains or potatoes, thank a plant too. Plants and algae provide us with the oxygen we need to survive, as well as the carbohydrates we use for energy. They do it all through photosynthesis.</p>
+       
+        <h2>Photosynthesis: How Plants Make Our Oxygen and Energy</h2>
+       
+        <p>Photosynthesis is the process of creating sugar and oxygen from carbon dioxide, water, and sunlight. It happens through a long series of chemical reactions. But it can be summarized like this: Carbon dioxide, water, and light go in. Glucose, water, and oxygen come out. (Glucose is a simple sugar.)</p>
+       
+        <h3>The Process of Photosynthesis</h3>
+        <p>Photosynthesis can be split into two processes. The “photo” part refers to reactions triggered by light. “Synthesis” — the making of the sugar — is a separate process called the Calvin cycle.</p>
+       
+        <h4>Inside the Chloroplast</h4>
+        <p>Both processes happen inside a chloroplast. This is a specialized structure, or organelle, in a plant cell. The structure contains stacks of membranes called thylakoid membranes. That’s where the light reaction begins.</p>
+        <img src="chloroplast_diagram.jpg" alt="Diagram showing the inside of a chloroplast">
+        <p>Chloroplasts are found in plant cells. This is where photosynthesis takes place. The chlorophyll molecules that take in energy from sunlight are located in the stacks called thylakoid membranes.</p>
+        <small>Image source: <cite>BLUERINGMEDIA/ISTOCK/GETTY IMAGES PLUS</cite></small>
+       
+        <h3>Let the Light Shine In</h3>
+        <p>When light hits a plant’s leaves, it shines on chloroplasts and into their thylakoid membranes. Those membranes are filled with chlorophyll, a green pigment. This pigment absorbs light energy. Light travels as electromagnetic waves. The wavelength — distance between waves — determines energy level. Some of those wavelengths are visible to us as the colors we see. If a molecule, such as chlorophyll, has the right shape, it can absorb the energy from some wavelengths of light.</p>
+        <!-- Continue adding paragraphs for the rest of the content -->
+    </article>
+
+    <div id="reader-tool" onclick="readSelectedText()">Read Selected Text</div>
+
+    <script>
+        function readSelectedText() {
+            var selection = window.getSelection();
+            var selectedText = selection.toString().trim();
+
+            if (selectedText !== '') {
+                if ('speechSynthesis' in window) {
+                    var synthesis = window.speechSynthesis;
+                    var utterance = new SpeechSynthesisUtterance(selectedText);
+
+                    synthesis.speak(utterance);
+                } else {
+                    alert("Text-to-speech is not supported in your browser. Please use a modern browser.");
+                }
+            } else {
+                alert('Please select some text to read.');
+            }
+        }
+    </script>
+
+</body>
+</html>
